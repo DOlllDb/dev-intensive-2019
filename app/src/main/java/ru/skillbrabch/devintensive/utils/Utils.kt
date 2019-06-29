@@ -1,9 +1,5 @@
 package ru.skillbrabch.devintensive.utils
 
-import ru.skillbrabch.devintensive.extentions.TimeUnits
-import java.util.*
-import java.util.function.Function
-
 object Utils {
     fun parseFullName(fullName: String?): Pair<String?, String?> {
         val parts: List<String>? = fullName?.split(" ")?.filter { s: String -> !s.isBlank() }
