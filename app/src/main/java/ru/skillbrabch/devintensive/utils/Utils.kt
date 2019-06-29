@@ -5,14 +5,17 @@ object Utils {
         val parts: List<String>? = fullName?.split(" ")?.filter { s: String -> !s.isBlank() }
         val firstName = parts?.getOrNull(0)
         val lastName = parts?.getOrNull(1)
+        println("$firstName $lastName")
         return firstName to lastName
     }
 
     fun transliteration(payload: String, divider: String = " "): String {
-        return payload.toLowerCase().split(" ").joinToString(divider) { part ->
+        val result =  payload.toLowerCase().split(" ").joinToString(divider) { part ->
             part.split("").joinToString("") { character -> transliterateCharacter(character) }
                 .capitalize()
         }
+        println(result)
+        return result
     }
 
     private fun transliterateCharacter(character: String): String = when (character) {
@@ -53,14 +56,13 @@ object Utils {
     }
 
     fun toInitials(firstName: String?, lastName: String?): String {
-        if (firstName == null && lastName == null) {
-            return "null"
-        }
         val initials =
             "${firstName?.trim()?.toUpperCase()?.getOrNull(0)}${lastName?.trim()?.toUpperCase()?.getOrNull(0)}"
-        return when (initials.replace("null", "")) {
-            "" -> "null null"
+        val result =  when (initials.replace("null", "")) {
+            "" -> "null"
             else -> initials.replace("null", "")
         }
+        println(result)
+        return result
     }
 }

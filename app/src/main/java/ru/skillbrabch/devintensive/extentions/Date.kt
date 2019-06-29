@@ -5,6 +5,7 @@ import java.util.*
 
 fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
     val dateFormat = SimpleDateFormat(pattern, Locale("ru"))
+    println(dateFormat.format(this))
     return dateFormat.format(this)
 }
 
@@ -17,8 +18,7 @@ fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
 }
 
 fun Date.humanizeDiff(date: Date = Date()): String {
-    val diff = date.time - this.time;
-    return when (diff) {
+    val result = when (val diff = Math.abs(date.time - this.time)) {
         in TimeUnits.SECOND.toMillis(0)..TimeUnits.SECOND.toMillis(1) -> "только что"
         in TimeUnits.SECOND.toMillis(1)..TimeUnits.SECOND.toMillis(45) -> "несколько секунд назад"
         in TimeUnits.SECOND.toMillis(45)..TimeUnits.SECOND.toMillis(75) -> "минуту назад"
@@ -31,6 +31,8 @@ fun Date.humanizeDiff(date: Date = Date()): String {
         in TimeUnits.HOUR.toMillis(26)..TimeUnits.DAY.toMillis(360) -> TimeUnits.DAY.getDeclentedRepresentation(diff)
         else -> "более года назад"
     }
+    println(result)
+    return result
 }
 
 enum class TimeUnits(
