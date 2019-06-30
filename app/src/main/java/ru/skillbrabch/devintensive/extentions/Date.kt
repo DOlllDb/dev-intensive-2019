@@ -18,21 +18,18 @@ fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
 }
 
 fun Date.humanizeDiff(date: Date = Date()): String {
-    val result = when (val diff = Math.abs(date.time - this.time)) {
+    val isInPast = date.time >= this.time
+    return when (val diff = (Math.abs(date.time - this.time) / 1000) * 1000) {
         in TimeUnits.SECOND.toMillis(0)..TimeUnits.SECOND.toMillis(1) -> "только что"
-        in TimeUnits.SECOND.toMillis(1)..TimeUnits.SECOND.toMillis(45) -> "несколько секунд назад"
-        in TimeUnits.SECOND.toMillis(45)..TimeUnits.SECOND.toMillis(75) -> "минуту назад"
-        in TimeUnits.SECOND.toMillis(75)..TimeUnits.MINUTE.toMillis(45) -> TimeUnits.MINUTE.getDeclentedRepresentation(
-            diff
-        )
-        in TimeUnits.MINUTE.toMillis(45)..TimeUnits.MINUTE.toMillis(75) -> "час назад"
-        in TimeUnits.MINUTE.toMillis(75)..TimeUnits.HOUR.toMillis(22) -> TimeUnits.HOUR.getDeclentedRepresentation(diff)
-        in TimeUnits.HOUR.toMillis(22)..TimeUnits.HOUR.toMillis(26) -> "день назад"
-        in TimeUnits.HOUR.toMillis(26)..TimeUnits.DAY.toMillis(360) -> TimeUnits.DAY.getDeclentedRepresentation(diff)
-        else -> "более года назад"
+        in TimeUnits.SECOND.toMillis(0)..TimeUnits.SECOND.toMillis(45) -> if (isInPast) "несколько секунд назад"  else "через несколько секунд"
+        in TimeUnits.SECOND.toMillis(45)..TimeUnits.SECOND.toMillis(75) -> if (isInPast) "минуту назад"  else "через минуту"
+        in TimeUnits.SECOND.toMillis(75)..TimeUnits.MINUTE.toMillis(45) -> TimeUnits.MINUTE.getDeclentedRepresentation(diff, isInPast)
+        in TimeUnits.MINUTE.toMillis(45)..TimeUnits.MINUTE.toMillis(75) -> if (isInPast) "час назад" else "через час"
+        in TimeUnits.MINUTE.toMillis(75)..TimeUnits.HOUR.toMillis(22) -> TimeUnits.HOUR.getDeclentedRepresentation(diff, isInPast)
+        in TimeUnits.HOUR.toMillis(22)..TimeUnits.HOUR.toMillis(26) -> if (isInPast) "день назад" else "через день"
+        in TimeUnits.HOUR.toMillis(26)..TimeUnits.DAY.toMillis(360) -> TimeUnits.DAY.getDeclentedRepresentation(diff, isInPast)
+        else -> if (isInPast) "более года назад" else "более чем через год"
     }
-    println(result)
-    return result
 }
 
 enum class TimeUnits(
@@ -46,8 +43,8 @@ enum class TimeUnits(
 
     fun toMillis(value: Int) = convertValue * value
     fun getValueFromMillis(value: Long) = value / convertValue
-    fun getDeclentedRepresentation(value: Long) =
-        "${getValueFromMillis(value)} ${getDeclentedStringValue(getValueFromMillis(value))} назад"
+    fun getDeclentedRepresentation(value: Long, isInPast: Boolean) =
+        "${if (isInPast) "" else "через " }${getValueFromMillis(value)} ${getDeclentedStringValue(getValueFromMillis(value))}${if (isInPast) " назад" else ""}"
 
 
     private fun getDeclentedStringValue(value: Long): String {
