@@ -1,4 +1,4 @@
-package ru.skillbrabch.devintensive.models
+package ru.skillbranch.devintensive.models
 
 import java.util.*
 
@@ -22,12 +22,10 @@ abstract class BaseMessage(
             isIncoming: Boolean = false
         ): BaseMessage {
             lastId++
-            val message = when (type) {
+            return when (type) {
                 "image" -> ImageMessage("$lastId", from, chat, date = date, image = payload as String, isIncomint = isIncoming)
                 else -> TextMessage("$lastId", from, chat, date = date, text = payload as String, isIncoming = isIncoming)
             }
-            println(message.formatMessage())
-            return message
         }
     }
 }

@@ -1,11 +1,10 @@
-package ru.skillbrabch.devintensive.extentions
+package ru.skillbranch.devintensive.extentions
 
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
     val dateFormat = SimpleDateFormat(pattern, Locale("ru"))
-    println(dateFormat.format(this))
     return dateFormat.format(this)
 }
 

@@ -1,4 +1,4 @@
-package ru.skillbrabch.devintensive
+package ru.skillbranch.devintensive
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
