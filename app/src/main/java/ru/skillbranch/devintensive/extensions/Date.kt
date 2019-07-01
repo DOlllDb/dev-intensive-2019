@@ -42,13 +42,8 @@ enum class TimeUnits(
     fun getDeclentedRepresentation(value: Long, isInPast: Boolean) =
         "${if (isInPast) "" else "через " }${getValueFromMillis(value)} ${getDeclentedStringValue(getValueFromMillis(value))}${if (isInPast) " назад" else ""}"
 
-
     private fun getDeclentedStringValue(value: Long): String {
-        var resultValue = Math.abs(value)
-        while (resultValue / 100 != 0L) {
-            resultValue %= 100
-        }
-        return when (resultValue) {
+        return when (val resultValue = Math.abs(value) % 100) {
             1L -> declentionValues[0]
             in 2..4 -> declentionValues[1]
             0L, in 5..20 -> declentionValues[2]

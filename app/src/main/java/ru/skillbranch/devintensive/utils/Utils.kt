@@ -49,11 +49,11 @@ object Utils {
         else -> character.toString()
     }
 
-    fun toInitials(firstName: String?, lastName: String?): String {
+    fun toInitials(firstName: String?, lastName: String?): String? {
         val initials =
             "${firstName?.trim()?.toUpperCase()?.getOrNull(0)}${lastName?.trim()?.toUpperCase()?.getOrNull(0)}"
         return when (initials.replace("null", "")) {
-            "" -> "null"
+            "" -> null
             else -> initials.replace("null", "")
         }
     }
