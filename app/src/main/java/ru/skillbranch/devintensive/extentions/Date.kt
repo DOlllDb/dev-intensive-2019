@@ -9,16 +9,13 @@ fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
 }
 
 fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
-    var time = this.time
-
-    time += units.toMillis(value)
-    this.time = time
+    this.time += units.toMillis(value)
     return this
 }
 
 fun Date.humanizeDiff(date: Date = Date()): String {
     val isInPast = date.time >= this.time
-    return when (val diff = (Math.abs(date.time - this.time) / 1000) * 1000) {
+    return when (val diff = (Math.abs(date.time - this.time))) {
         in TimeUnits.SECOND.toMillis(0)..TimeUnits.SECOND.toMillis(1) -> "только что"
         in TimeUnits.SECOND.toMillis(0)..TimeUnits.SECOND.toMillis(45) -> if (isInPast) "несколько секунд назад"  else "через несколько секунд"
         in TimeUnits.SECOND.toMillis(45)..TimeUnits.SECOND.toMillis(75) -> if (isInPast) "минуту назад"  else "через минуту"
