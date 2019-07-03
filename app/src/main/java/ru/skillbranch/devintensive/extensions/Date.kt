@@ -40,14 +40,14 @@ enum class TimeUnits(
     fun toMillis(value: Int) = convertValue * value
     fun getValueFromMillis(value: Long) = value / convertValue
     fun getDeclentedRepresentation(value: Long, isInPast: Boolean) =
-        "${if (isInPast) "" else "через " }${getValueFromMillis(value)} ${getDeclentedStringValue(getValueFromMillis(value))}${if (isInPast) " назад" else ""}"
+        "${if (isInPast) "" else "через " }${plural(getValueFromMillis(value).toInt())}${if (isInPast) " назад" else ""}"
 
-    private fun getDeclentedStringValue(value: Long): String {
-        return when (val resultValue = Math.abs(value) % 100) {
-            1L -> declentionValues[0]
-            in 2..4 -> declentionValues[1]
-            0L, in 5..20 -> declentionValues[2]
-            else -> getDeclentedStringValue(resultValue % 10)
+    fun plural(value: Int): String {
+        return "$value " + when {
+            Math.abs(value) % 100 in 5..20 -> declentionValues[2]
+            Math.abs(value) % 10 == 1 -> declentionValues[0]
+            Math.abs(value) % 10 in 2..4 -> declentionValues[1]
+            else -> declentionValues[2]
         }
     }
 }
