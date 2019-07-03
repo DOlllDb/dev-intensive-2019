@@ -7,4 +7,6 @@ fun String.truncate(maxLenght: Int = 16): String {
         this.trim()
 }
 
-fun String.stripHtml() = this.replace(Regex("<[^<]*?>|&\\d+;"), "").replace(Regex("\\s+"), " ")
+fun String.stripHtml() : String {
+    return this.replace(Regex("<[^<]*?>|&(#\\d+|amp|lt|gt|quot);"), "").replace(Regex(" +"), " ")
+}
