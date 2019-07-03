@@ -2,7 +2,7 @@ package ru.skillbranch.devintensive.extensions
 
 fun String.truncate(maxLenght: Int = 16): String {
     return if (this.trim().length > maxLenght)
-        "${this.substring(0, minOf(maxLenght, this.length)).trim()}..."
+        "${this.substring(0, minOf(maxLenght, this.length)+1).trim()}..."
     else
         this.trim()
 }
