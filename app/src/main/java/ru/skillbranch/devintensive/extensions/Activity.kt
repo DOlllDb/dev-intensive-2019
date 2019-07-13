@@ -17,7 +17,7 @@ fun MainActivity.hideKeyboard() {
 }
 
 fun MainActivity.executeOnSendAction() {
-    val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
+    val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString())
     val (r, g, b) = color
     messageEt.setText("")
     benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
