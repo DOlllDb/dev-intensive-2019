@@ -55,52 +55,50 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         NAME("Как меня зовут?", listOf("бендер", "bender")) {
             override fun nextQuestion(): Question = PROFESSION
             override fun validateAnswer(answer: String): String? {
-                val firstLetter = answer[0]
-                return if (!(firstLetter.isLetter() && firstLetter.isUpperCase())) {
-                    "Имя должно начинаться с заглавной буквы\n"
-                } else {
+                return if (answer.isEmpty() || (answer[0].isLetter() && answer[0].isUpperCase())) {
                     null
+                } else {
+                    "Имя должно начинаться с заглавной буквы\n"
                 }
             }
         },
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
             override fun nextQuestion(): Question = MATERIAL
             override fun validateAnswer(answer: String): String? {
-                val firstLetter = answer[0]
-                return if (!(firstLetter.isLetter() && firstLetter.isLowerCase())) {
-                    "Профессия должна начинаться со строчной буквы\n"
-                } else {
+                return if (answer.isEmpty() || (answer[0].isLetter() && answer[0].isLowerCase())) {
                     null
+                } else {
+                    "Профессия должна начинаться со строчной буквы\n"
                 }
             }
         },
         MATERIAL("Из чего я сделан?", listOf("метадд", "дерево", "metal", "iron", "wood")) {
             override fun nextQuestion(): Question = BDAY
             override fun validateAnswer(answer: String): String? {
-                return if (answer.any { it.isDigit() }) {
-                    "Материал не должен содержать цифр\n"
-                } else {
+                return if (answer.isEmpty() || answer.none { it.isDigit() }) {
                     null
+                } else {
+                    "Материал не должен содержать цифр\n"
                 }
             }
         },
         BDAY("Когда меня создали?", listOf("2993")) {
             override fun nextQuestion(): Question = SERIAL
             override fun validateAnswer(answer: String): String? {
-                return if (answer.any { !it.isDigit() }) {
-                    "Год моего рождения должен содержать только цифры\n"
-                } else {
+                return if (answer.isEmpty() || answer.all { it.isDigit() }) {
                     null
+                } else {
+                    "Год моего рождения должен содержать только цифры\n"
                 }
             }
         },
         SERIAL("Мой серийный номер?", listOf("2716057")) {
             override fun nextQuestion(): Question = IDLE
             override fun validateAnswer(answer: String): String? {
-                return if (answer.length != 7 || answer.any { !it.isDigit() }) {
-                    "Серийный номер содержит только цифры, и их 7\n"
-                } else {
+                return if (answer.isEmpty() || (answer.length == 7 && answer.all { it.isDigit() })) {
                     null
+                } else {
+                    "Серийный номер содержит только цифры, и их 7\n"
                 }
             }
         },

@@ -37,9 +37,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         sendMessageOnDone(messageEt)
         val status = savedInstanceState?.getString("STATUS") ?: Bender.Status.NORMAL.name
         val question = savedInstanceState?.getString("QUESTION") ?: Bender.Question.NAME.name
-        benderObj = Bender(Bender.Status.valueOf(status), Bender.Question.valueOf(question))
-        Log.d("M_MainActivity", "onCreate $status $question")
+        val failsCount = savedInstanceState?.getInt("FAILS") ?: 0
+        benderObj = Bender(Bender.Status.valueOf(status), Bender.Question.valueOf(question), failsCount)
+        Log.d("M_MainActivity", "onCreate $status $question $failsCount")
         val (r, g, b) = benderObj.status.color
+        Log.d("M_MainActivity", "color: ${Color.rgb(r, g, b)}")
         benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
         textTxt.text = benderObj.askQuestion()
     }
@@ -78,6 +80,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onSaveInstanceState(outState)
         outState.putString("STATUS", benderObj.status.name)
         outState.putString("QUESTION", benderObj.question.name)
+        outState.putInt("FAILS", benderObj.failsCount)
         Log.d("M_MainActivity", "onSaveInstanceState ${benderObj.status.name} ${benderObj.question.name}")
     }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.Rect
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import ru.skillbranch.devintensive.MainActivity
 
@@ -22,6 +23,7 @@ fun MainActivity.executeOnSendAction() {
     messageEt.setText("")
     benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
     textTxt.text = phrase
+    hideKeyboard()
 }
 
 fun MainActivity.isKeyboardOpen(): Boolean {
