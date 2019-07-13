@@ -22,7 +22,6 @@ fun MainActivity.executeOnSendAction() {
     messageEt.setText("")
     benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
     textTxt.text = phrase
-    hideKeyboard()
 }
 
 fun MainActivity.isKeyboardOpen(): Boolean {
