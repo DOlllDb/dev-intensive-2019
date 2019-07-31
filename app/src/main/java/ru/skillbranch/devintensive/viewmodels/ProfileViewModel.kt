@@ -13,6 +13,7 @@ class ProfileViewModel : ViewModel() {
     private val repository : PreferencesRepository = PreferencesRepository
     private val profileData = MutableLiveData<Profile>()
     private val appTheme = MutableLiveData<Int>()
+    private val repositoryText = MutableLiveData<String>()
 
     init {
         Log.d("M_ProfileViewModel", "init view model")
@@ -29,6 +30,8 @@ class ProfileViewModel : ViewModel() {
 
     fun getTheme() : LiveData<Int> = appTheme
 
+    fun getRepositoryText() : LiveData<String> = repositoryText
+
     fun saveProfileData(profile: Profile) {
         repository.saveProfile(profile)
         profileData.value = profile
@@ -42,5 +45,9 @@ class ProfileViewModel : ViewModel() {
         }
 
         repository.saveAppTheme(appTheme.value!!)
+    }
+
+    fun onRepositoryTextChanged(text: String) {
+        repositoryText.value = text
     }
 }

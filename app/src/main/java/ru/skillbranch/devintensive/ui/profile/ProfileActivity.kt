@@ -4,6 +4,8 @@ import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -29,7 +31,6 @@ class ProfileActivity : AppCompatActivity(){
     lateinit var viewFields: Map<String, TextView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // TODO set theme before super
         Log.d("M_ProfileActivity", "onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -54,12 +55,8 @@ class ProfileActivity : AppCompatActivity(){
 
         btn_edit.setOnClickListener {
             if (isEditMode) {
-                if (!Utils.validateUrl(et_repository.text.toString())) {
-                    wr_repository.error = "Невалидный адрес репозитория"
+                if (wr_repository.error?.isNotBlank() == true) {
                     et_repository.text.clear()
-                    return@setOnClickListener
-                } else {
-                    wr_repository.error = ""
                 }
                 saveProfileInfo()
             }
@@ -70,12 +67,26 @@ class ProfileActivity : AppCompatActivity(){
         btn_switch_theme.setOnClickListener {
             viewModel.switchTheme()
         }
+
+        et_repository.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                viewModel.onRepositoryTextChanged(p0.toString())
+            }
+        })
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         viewModel.getProfileData().observe(this, Observer { updateUI(it) })
         viewModel.getTheme().observe(this, Observer { updateTheme(it) })
+        viewModel.getRepositoryText().observe(this, Observer { updateRepo(it) })
+    }
+
+    private fun updateRepo(it: String) {
+        Log.d("M_ProfileActivity", "updateRepo(): $it")
+        wr_repository.error = if (Utils.validateUrl(it)) "" else "Невалидный адрес репозитория"
     }
 
     private fun updateTheme(mode: Int) {

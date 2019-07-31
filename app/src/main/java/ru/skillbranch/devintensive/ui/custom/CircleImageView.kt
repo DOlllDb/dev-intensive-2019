@@ -44,7 +44,6 @@ class CircleImageView @JvmOverloads constructor(
 
     fun setBorderWidth(@Dimension dp: Int) {
         cv_borderWidth = Utils.convertDpToPx(context, dp)
-        this.invalidate()
     }
 
     //    @ColorRes
@@ -54,12 +53,10 @@ class CircleImageView @JvmOverloads constructor(
 
     fun setBorderColor(hex: String) {
         cv_borderColor = Color.parseColor(hex)
-        this.invalidate()
     }
 
     fun setBorderColor(@ColorRes colorId: Int) {
         cv_borderColor = ContextCompat.getColor(App.applicationContext(), colorId)
-        this.invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {

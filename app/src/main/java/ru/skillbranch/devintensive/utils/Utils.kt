@@ -30,7 +30,7 @@ object Utils {
         'ц' to "c",
         'ч' to "ch",
         'ш' to "sh",
-        'щ' to "sh",
+        'щ' to "sh'",
         'ъ' to "",
         'ы' to "i",
         'ь' to "",
@@ -65,7 +65,12 @@ object Utils {
     }
 
     fun validateUrl(url: String) : Boolean {
-        return url.isBlank() || url.matches(Regex("^(?:https://)?(?:www\\.)?github\\.com/(?!(enterprise|features|topics|collections|trending|events|marketplace|pricing|nonprofit|customer-stories|security|login|join))[^/]+\$"))
+        return url.isBlank() || url.matches(Regex("^(?:https://)?(?:www\\.)?github\\.com/(?!(enterprise|features|topics|collections|trending|events|marketplace|pricing|nonprofit|customer-stories|security|login|join))[^/]+(?:/)?\$"))
+    }
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        println(validateUrl("https://github.com/join2"))
     }
 
     fun convertPxToDp(context: Context, pxValue: Int) = (pxValue / context.resources.displayMetrics.density + 0.5f).toInt()

@@ -41,8 +41,6 @@
                     android:layout_width="@dimen/avatar_round_size_112"
                     android:layout_height="@dimen/avatar_round_size_112"
                     android:src="@drawable/avatar_default"
-                    app:cv_borderColor="@color/color_primary_light"
-                    app:cv_borderWidth="2dp"
             />
             <ImageButton
                     android:id="@+id/btn_edit"
