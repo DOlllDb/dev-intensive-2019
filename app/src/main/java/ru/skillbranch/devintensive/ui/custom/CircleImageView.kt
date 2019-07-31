@@ -48,16 +48,16 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     //    @ColorRes
-    private fun getBorderColor(): Int {
+    fun getBorderColor(): Int {
         return cv_borderColor
     }
 
-    private fun setBorderColor(hex: String) {
+    fun setBorderColor(hex: String) {
         cv_borderColor = Color.parseColor(hex)
         this.invalidate()
     }
 
-    private fun setBorderColor(@ColorRes colorId: Int) {
+    fun setBorderColor(@ColorRes colorId: Int) {
         cv_borderColor = ContextCompat.getColor(App.applicationContext(), colorId)
         this.invalidate()
     }
