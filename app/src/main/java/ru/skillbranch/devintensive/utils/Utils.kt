@@ -1,5 +1,7 @@
 package ru.skillbranch.devintensive.utils
 
+import android.content.Context
+
 object Utils {
     private val transliterationMap: Map<Char, String> = hashMapOf(
         'а' to "a",
@@ -61,4 +63,14 @@ object Utils {
             else -> initials.replace("null", "")
         }
     }
+
+    fun validateUrl(url: String) : Boolean {
+        return url.isBlank() || url.matches(Regex("^(?:https://)?(?:www\\.)?github\\.com/(?!(enterprise|features|topics|collections|trending|events|marketplace|pricing|nonprofit|customer-stories|security|login|join))[^/]+\$"))
+    }
+
+    fun convertPxToDp(context: Context, pxValue: Int) = (pxValue / context.resources.displayMetrics.density + 0.5f).toInt()
+
+    fun convertDpToPx(context: Context, dpValue: Int) = (dpValue * context.resources.displayMetrics.density + 0.5f).toInt()
+
+    fun convertSpToPx(context: Context, spValue: Int) = spValue * context.resources.displayMetrics.scaledDensity.toInt()
 }
