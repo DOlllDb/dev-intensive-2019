@@ -68,11 +68,6 @@ object Utils {
         return url.isBlank() || url.matches(Regex("^(?:https://)?(?:www\\.)?github\\.com/(?!(enterprise|features|topics|collections|trending|events|marketplace|pricing|nonprofit|customer-stories|security|login|join))[^/]+(?:/)?\$"))
     }
 
-    @JvmStatic
-    fun main(args: Array<String>) {
-        println(validateUrl("https://github.com/join2"))
-    }
-
     fun convertPxToDp(context: Context, pxValue: Int) = (pxValue / context.resources.displayMetrics.density + 0.5f).toInt()
 
     fun convertDpToPx(context: Context, dpValue: Int) = (dpValue * context.resources.displayMetrics.density + 0.5f).toInt()

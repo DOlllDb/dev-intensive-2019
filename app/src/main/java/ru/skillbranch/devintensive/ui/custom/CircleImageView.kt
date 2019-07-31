@@ -84,6 +84,7 @@ class CircleImageView @JvmOverloads constructor(
             val image = if (text == null) createDefaultAvatar(theme) else createInitialsAvatar(text, sizeSp, theme)
             this.cv_text = text
             this.cv_bitmap = image
+            setImageBitmap(image)
             invalidate()
         }
     }
